@@ -1,0 +1,48 @@
+buildscript {
+    ext {
+        springBootVersion = '[1.5,2.0['
+        lombokVersion = '[1.16,2.0['
+        h2Version = '[1.4,2.0['
+        securityJwtVersion = '1.0.0-SNAPSHOT'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+//        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+group = 'eu.fraho.spring'
+description = "Spring boot security integration for JWT example application"
+
+jar {
+    version = "${project.version}"
+}
+dependencies {
+    compile("org.projectlombok:lombok:${lombokVersion}")
+    compile("eu.fraho.spring:security-jwt-hibernate-spring-boot-starter:${securityJwtVersion}")
+    compile("com.h2database:h2:${h2Version}")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+// code coverage
+apply plugin: 'jacoco'
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+check.dependsOn jacocoTestReport

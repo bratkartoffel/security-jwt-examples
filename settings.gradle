@@ -1,0 +1,4 @@
+include ":starter-custom-password-encoder"
+include ":starter-custom-security-conf"
+include ":starter-hibernate"
+include ":starter-multiple"
