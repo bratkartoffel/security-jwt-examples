@@ -1,0 +1,2 @@
+logging.level.eu.fraho.spring: DEBUG
+fraho.jwt.refresh.cache-impl: eu.fraho.spring.securityJwt.service.InternalTokenStore

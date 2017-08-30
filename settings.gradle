@@ -1,3 +1,5 @@
+include ":regular-internal"
+include ":regular-no-refresh"
 include ":starter-custom-password-encoder"
 include ":starter-custom-security-conf"
 include ":starter-hibernate"
