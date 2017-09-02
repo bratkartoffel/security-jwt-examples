@@ -15,7 +15,7 @@ import java.io.IOException;
 @SpringBootApplication
 @Slf4j
 public class CustomSecurityConfApplication {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SpringApplication.run(CustomSecurityConfApplication.class, args);
     }
 }
