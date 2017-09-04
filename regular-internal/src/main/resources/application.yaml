@@ -1,0 +1,6 @@
+logging.level.eu.fraho.spring: DEBUG
+fraho.jwt.refresh.cache-impl: eu.fraho.spring.securityJwt.service.InternalTokenStore
+fraho:
+  crypt:
+    algorithm: sha256
+    rounds: 5000
