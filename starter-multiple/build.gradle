@@ -3,7 +3,7 @@ buildscript {
         springBootVersion = '[1.5,2.0['
         lombokVersion = '[1.16,2.0['
         h2Version = '[1.4,2.0['
-        securityJwtVersion = '1.0.0'
+        securityJwtVersion = '2.0.0-SNAPSHOT'
     }
     repositories {
         mavenLocal()

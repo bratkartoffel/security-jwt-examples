@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.io.IOException;
 
@@ -26,7 +27,8 @@ public class MultiStartersApplication {
     // we want explicitly use the in memory implementation
     // if not specified this way, the dependency listed latest in build.gradle will be used
     @Bean
-    public RefreshTokenStore refreshTokenStore(final JwtRefreshConfiguration jwtRefreshConfiguration) {
-        return new InternalTokenStore(jwtRefreshConfiguration);
+    public RefreshTokenStore refreshTokenStore(final JwtRefreshConfiguration jwtRefreshConfiguration,
+                                               final UserDetailsService userDetailsService) {
+        return new InternalTokenStore(jwtRefreshConfiguration, userDetailsService);
     }
 }

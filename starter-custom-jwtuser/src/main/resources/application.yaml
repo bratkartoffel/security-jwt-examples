@@ -2,6 +2,6 @@ logging.level.eu.fraho.spring: DEBUG
 fraho:
   jwt:
     token:
-      path: /foobar/login
+      path: /auth/login
     refresh:
-      path: /foobar/refresh
+      path: /auth/refresh
