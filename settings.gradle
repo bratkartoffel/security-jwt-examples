@@ -4,3 +4,7 @@ include ":starter-custom-password-encoder"
 include ":starter-custom-security-conf"
 include ":starter-hibernate"
 include ":starter-multiple"
+
+// not yet released, so disable for now
+//include ":starter-custom-endpoints"
+//include ":starter-custom-jwtuser"
