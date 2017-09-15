@@ -55,13 +55,13 @@ public class TestRegularApplication {
     @Test
     public void testPrivateNoToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
     public void testPrivateGarbageToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private").header("Authorization", "Bearer foobar");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test

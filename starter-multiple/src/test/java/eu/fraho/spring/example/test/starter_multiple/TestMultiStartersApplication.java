@@ -4,10 +4,10 @@
  *
  * Please see LICENCE.md for complete licence text.
  */
-package eu.fraho.spring.example.test.starter_custom_password_encoder;
+package eu.fraho.spring.example.test.starter_multiple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.fraho.spring.example.starter_hibernate.HibernateApplication;
+import eu.fraho.spring.example.starter_multiple.MultiStartersApplication;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -28,9 +28,9 @@ import javax.servlet.Filter;
 import java.util.Map;
 
 @Slf4j
-@SpringBootTest(classes = HibernateApplication.class)
+@SpringBootTest(classes = MultiStartersApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestHibernateApplication {
+public class TestMultiStartersApplication {
     @Autowired
     @Getter
     private WebApplicationContext webApplicationContext;
@@ -55,13 +55,13 @@ public class TestHibernateApplication {
     @Test
     public void testPrivateNoToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
     public void testPrivateGarbageToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private").header("Authorization", "Bearer foobar");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test

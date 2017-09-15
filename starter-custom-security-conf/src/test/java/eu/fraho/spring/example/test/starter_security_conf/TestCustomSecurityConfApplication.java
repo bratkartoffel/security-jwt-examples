@@ -4,7 +4,7 @@
  *
  * Please see LICENCE.md for complete licence text.
  */
-package eu.fraho.spring.example.test.starter_custom_password_encoder;
+package eu.fraho.spring.example.test.starter_security_conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_security_conf.CustomSecurityConfApplication;
@@ -55,13 +55,13 @@ public class TestCustomSecurityConfApplication {
     @Test
     public void testPrivateNoToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
     public void testPrivateGarbageToken() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private").header("Authorization", "Bearer foobar");
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isForbidden());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
