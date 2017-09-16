@@ -36,20 +36,16 @@ import java.util.stream.Collectors;
 @SpringBootTest(classes = CookiesApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCookiesApplication {
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     @Getter
     private WebApplicationContext webApplicationContext;
-
     @Autowired
     private Filter springSecurityFilterChain;
-
     @Autowired
     private JwtTokenConfiguration tokenConfiguration;
-
     @Autowired
     private JwtRefreshConfiguration refreshConfiguration;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private MockMvc mockMvc;
 
     @Before
