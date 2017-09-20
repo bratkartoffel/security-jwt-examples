@@ -1,5 +1,5 @@
 logging.level.eu.fraho.spring: DEBUG
-fraho.jwt.refresh.cache-impl: eu.fraho.spring.securityJwt.service.internal.InternalTokenStore
+fraho.jwt.refresh.cache-impl: eu.fraho.spring.securityJwt.internal.service.InternalTokenStore
 fraho:
   crypt:
     algorithm: sha256

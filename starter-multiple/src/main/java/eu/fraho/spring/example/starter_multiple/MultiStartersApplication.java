@@ -7,8 +7,8 @@
 package eu.fraho.spring.example.starter_multiple;
 
 import eu.fraho.spring.securityJwt.config.JwtRefreshConfiguration;
+import eu.fraho.spring.securityJwt.internal.service.InternalTokenStore;
 import eu.fraho.spring.securityJwt.service.RefreshTokenStore;
-import eu.fraho.spring.securityJwt.service.internal.InternalTokenStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

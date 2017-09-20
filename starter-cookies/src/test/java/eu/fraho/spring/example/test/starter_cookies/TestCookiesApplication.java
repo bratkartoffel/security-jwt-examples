@@ -77,7 +77,7 @@ public class TestCookiesApplication {
         Cookie cookie = new Cookie(tokenConfiguration.getCookie().getNames()[0], "foobar");
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/private")
                 .cookie(cookie);
-        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isFound());
+        mockMvc.perform(req).andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
     @Test
@@ -155,18 +155,16 @@ public class TestCookiesApplication {
                 .cookie(accessToken);
 
         mockMvc.perform(req)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.header().string("Location", "/auth/refreshCookie"));
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andExpect(MockMvcResultMatchers.content().string(""));
 
-        req = MockMvcRequestBuilders.get("/auth/refreshCookie")
-                .cookie(cookies.get(refreshConfiguration.getCookie().getNames()[0]))
-                .header("Referer", "/private");
+        req = MockMvcRequestBuilders.post("/auth/refresh")
+                .cookie(cookies.get(refreshConfiguration.getCookie().getNames()[0]));
 
         mockMvc.perform(req)
-                .andExpect(MockMvcResultMatchers.status().isTemporaryRedirect())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.cookie().exists(tokenConfiguration.getCookie().getNames()[0]))
-                .andExpect(MockMvcResultMatchers.cookie().exists(refreshConfiguration.getCookie().getNames()[0]))
-                .andExpect(MockMvcResultMatchers.header().string("Location", "/private"));
+                .andExpect(MockMvcResultMatchers.cookie().exists(refreshConfiguration.getCookie().getNames()[0]));
     }
 
     private String obtainToken() throws Exception {
