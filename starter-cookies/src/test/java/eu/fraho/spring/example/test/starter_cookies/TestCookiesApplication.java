@@ -8,8 +8,8 @@ package eu.fraho.spring.example.test.starter_cookies;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_cookies.CookiesApplication;
-import eu.fraho.spring.securityJwt.config.JwtRefreshConfiguration;
-import eu.fraho.spring.securityJwt.config.JwtTokenConfiguration;
+import eu.fraho.spring.securityJwt.config.RefreshProperties;
+import eu.fraho.spring.securityJwt.config.TokenProperties;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -43,13 +43,13 @@ public class TestCookiesApplication {
     @Autowired
     private Filter springSecurityFilterChain;
     @Autowired
-    private JwtTokenConfiguration tokenConfiguration;
+    private TokenProperties tokenConfiguration;
     @Autowired
-    private JwtRefreshConfiguration refreshConfiguration;
+    private RefreshProperties refreshConfiguration;
     private MockMvc mockMvc;
 
     @Before
-    public void setup() throws Exception {
+    public void setUp() throws Exception {
         if (mockMvc == null) {
             synchronized (this) {
                 if (mockMvc == null) {
