@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '[1.5,2.0['
+        springBootVersion = '1.5.9.RELEASE'
         lombokVersion = '[1.16,2.0['
         h2Version = '[1.4,2.0['
     }
