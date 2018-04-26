@@ -17,8 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -58,10 +56,5 @@ public class PasswordIgnoringLoginService implements LoginService {
         }
 
         return AuthenticationResponse.builder().accessToken(accessToken).build();
-    }
-
-    @Override
-    public boolean isTotpOk(@Nullable Integer totp, @NotNull @NonNull JwtUser userDetails) {
-        return true;
     }
 }
