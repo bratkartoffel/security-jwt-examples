@@ -5,13 +5,15 @@ import eu.fraho.spring.securityJwt.dto.JwtUser;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.ParseException;
+
 public class MyJwtUser extends JwtUser {
     @Getter
     @Setter
     private String foobar;
 
     @Override
-    public void applyClaims(JWTClaimsSet claims) {
+    public void applyClaims(JWTClaimsSet claims) throws ParseException {
         super.applyClaims(claims);
         setFoobar(String.valueOf(claims.getClaim("foobar")));
     }

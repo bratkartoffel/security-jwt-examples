@@ -15,12 +15,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.io.IOException;
-
 @SpringBootApplication
 @Slf4j
 public class MultiStartersApplication {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SpringApplication.run(MultiStartersApplication.class, args);
     }
 
@@ -29,6 +27,9 @@ public class MultiStartersApplication {
     @Bean
     public RefreshTokenStore refreshTokenStore(final RefreshProperties refreshProperties,
                                                final UserDetailsService userDetailsService) {
-        return new InternalTokenStore(refreshProperties, userDetailsService);
+        InternalTokenStore tokenStore = new InternalTokenStore();
+        tokenStore.setRefreshProperties(refreshProperties);
+        tokenStore.setUserDetailsService(userDetailsService);
+        return tokenStore;
     }
 }

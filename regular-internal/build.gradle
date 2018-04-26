@@ -30,7 +30,7 @@ dependencies {
     compile("org.projectlombok:lombok:${lombokVersion}")
     compile("eu.fraho.spring:security-jwt-internal:${securityJwtVersion}")
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
 // code coverage
