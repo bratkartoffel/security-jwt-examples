@@ -6,25 +6,18 @@
  */
 package eu.fraho.spring.example.starter_custom_password_encoder;
 
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 public class MyPasswordEncoder implements PasswordEncoder {
-    public MyPasswordEncoder() {
-        log.info("Using my password encoder");
-    }
-
     @Override
-    public String encode(@NonNull CharSequence rawPassword) {
+    public String encode(CharSequence rawPassword) {
         return rawPassword + "foo";
     }
 
     @Override
-    public boolean matches(@NonNull CharSequence rawPassword, @NonNull String encodedPassword) {
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return (rawPassword + "foo").equals(encodedPassword);
     }
 }

@@ -8,8 +8,6 @@ package eu.fraho.spring.example.test.starter_multiple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_multiple.MultiStartersApplication;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +25,10 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.Filter;
 import java.util.Map;
 
-@Slf4j
 @SpringBootTest(classes = MultiStartersApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestMultiStartersApplication {
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
 
     @Autowired
@@ -117,5 +113,9 @@ public class TestMultiStartersApplication {
                 .getContentAsByteArray();
 
         return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+    }
+
+    public WebApplicationContext getWebApplicationContext() {
+        return this.webApplicationContext;
     }
 }

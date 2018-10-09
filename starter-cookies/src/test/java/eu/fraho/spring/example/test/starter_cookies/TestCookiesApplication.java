@@ -8,10 +8,8 @@ package eu.fraho.spring.example.test.starter_cookies;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_cookies.CookiesApplication;
-import eu.fraho.spring.securityJwt.config.RefreshProperties;
-import eu.fraho.spring.securityJwt.config.TokenProperties;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import eu.fraho.spring.securityJwt.base.config.RefreshProperties;
+import eu.fraho.spring.securityJwt.base.config.TokenProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,13 +30,11 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 @SpringBootTest(classes = CookiesApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCookiesApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
     @Autowired
     private Filter springSecurityFilterChain;
@@ -195,5 +191,9 @@ public class TestCookiesApplication {
                 .andReturn()
                 .getResponse()
                 .getCookies()).collect(Collectors.toMap(Cookie::getName, c -> c));
+    }
+
+    public WebApplicationContext getWebApplicationContext() {
+        return this.webApplicationContext;
     }
 }

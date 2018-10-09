@@ -6,10 +6,7 @@
  */
 package eu.fraho.spring.example.starter_custom_password_encoder;
 
-import eu.fraho.spring.securityJwt.dto.JwtUser;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import eu.fraho.spring.securityJwt.base.dto.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,12 +17,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-@Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomUserDetailsService implements UserDetailsService {
-    @NonNull
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    @java.beans.ConstructorProperties({"passwordEncoder"})
+    public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

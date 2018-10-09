@@ -6,8 +6,7 @@
  */
 package eu.fraho.spring.example.starter_custom_jwtuser;
 
-import eu.fraho.spring.securityJwt.dto.JwtUser;
-import lombok.extern.slf4j.Slf4j;
+import eu.fraho.spring.securityJwt.base.dto.JwtUser;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 @SpringBootApplication
-@Slf4j
 public class CustomJwtUserApplication {
     public static void main(String[] args) {
         SpringApplication.run(CustomJwtUserApplication.class, args);
@@ -24,7 +22,6 @@ public class CustomJwtUserApplication {
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public JwtUser jwtUser() {
-        log.debug("Register MyJwtUser");
         return new MyJwtUser();
     }
 }

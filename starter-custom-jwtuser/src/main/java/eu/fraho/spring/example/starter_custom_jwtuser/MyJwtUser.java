@@ -1,15 +1,11 @@
 package eu.fraho.spring.example.starter_custom_jwtuser;
 
 import com.nimbusds.jwt.JWTClaimsSet;
-import eu.fraho.spring.securityJwt.dto.JwtUser;
-import lombok.Getter;
-import lombok.Setter;
+import eu.fraho.spring.securityJwt.base.dto.JwtUser;
 
 import java.text.ParseException;
 
 public class MyJwtUser extends JwtUser {
-    @Getter
-    @Setter
     private String foobar;
 
     @Override
@@ -22,5 +18,13 @@ public class MyJwtUser extends JwtUser {
         JWTClaimsSet.Builder builder = super.toClaims();
         builder.claim("foobar", foobar);
         return builder;
+    }
+
+    public String getFoobar() {
+        return this.foobar;
+    }
+
+    public void setFoobar(String foobar) {
+        this.foobar = foobar;
     }
 }

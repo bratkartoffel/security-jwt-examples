@@ -7,8 +7,7 @@
 package eu.fraho.spring.example.starter_swagger;
 
 import com.google.common.collect.Lists;
-import eu.fraho.spring.securityJwt.JwtAuthenticationEntryPoint;
-import lombok.RequiredArgsConstructor;
+import eu.fraho.spring.securityJwt.base.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +23,11 @@ import java.util.*;
 
 @Configuration
 @EnableSwagger2
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SwaggerConfig {
+    @Autowired
+    public SwaggerConfig() {
+    }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

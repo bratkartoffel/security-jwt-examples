@@ -8,8 +8,6 @@ package eu.fraho.spring.example.test.starter_swagger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_swagger.SwaggerApplication;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,14 +25,12 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.Filter;
 import java.util.Map;
 
-@Slf4j
 @SpringBootTest(classes = SwaggerApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestSwaggerApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
 
     @Autowired
@@ -137,5 +133,9 @@ public class TestSwaggerApplication {
                 .getContentAsByteArray();
 
         return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+    }
+
+    public WebApplicationContext getWebApplicationContext() {
+        return this.webApplicationContext;
     }
 }

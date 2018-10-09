@@ -6,17 +6,15 @@
  */
 package eu.fraho.spring.example.starter_multiple;
 
-import eu.fraho.spring.securityJwt.config.RefreshProperties;
+import eu.fraho.spring.securityJwt.base.config.RefreshProperties;
+import eu.fraho.spring.securityJwt.base.service.RefreshTokenStore;
 import eu.fraho.spring.securityJwt.internal.service.InternalTokenStore;
-import eu.fraho.spring.securityJwt.service.RefreshTokenStore;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @SpringBootApplication
-@Slf4j
 public class MultiStartersApplication {
     public static void main(String[] args) {
         SpringApplication.run(MultiStartersApplication.class, args);

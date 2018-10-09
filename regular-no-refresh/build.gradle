@@ -1,8 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '1.5.9.RELEASE'
-        lombokVersion = '[1.16,2.0['
-        h2Version = '[1.4,2.0['
+        h2Version = '1.4.197'
     }
     repositories {
         mavenLocal()
@@ -28,18 +27,7 @@ jar {
     version = "${project.version}"
 }
 dependencies {
-    compile("org.projectlombok:lombok:${lombokVersion}")
     compile("eu.fraho.spring:security-jwt-base:${securityJwtVersion}")
 
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
-
-// code coverage
-apply plugin: 'jacoco'
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-check.dependsOn jacocoTestReport

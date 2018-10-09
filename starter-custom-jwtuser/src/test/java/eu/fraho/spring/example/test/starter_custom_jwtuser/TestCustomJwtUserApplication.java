@@ -9,10 +9,8 @@ package eu.fraho.spring.example.test.starter_custom_jwtuser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_jwtuser.CustomJwtUserApplication;
 import eu.fraho.spring.example.starter_custom_jwtuser.MyJwtUser;
-import eu.fraho.spring.securityJwt.dto.JwtUser;
-import eu.fraho.spring.securityJwt.service.JwtTokenService;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import eu.fraho.spring.securityJwt.base.dto.JwtUser;
+import eu.fraho.spring.securityJwt.base.service.JwtTokenService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,13 +30,11 @@ import javax.servlet.Filter;
 import java.util.Map;
 import java.util.Optional;
 
-@Slf4j
 @SpringBootTest(classes = CustomJwtUserApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCustomJwtUserApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
     @Autowired
     private Filter springSecurityFilterChain;
@@ -146,5 +142,9 @@ public class TestCustomJwtUserApplication {
                 .getContentAsByteArray();
 
         return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+    }
+
+    public WebApplicationContext getWebApplicationContext() {
+        return this.webApplicationContext;
     }
 }

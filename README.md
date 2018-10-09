@@ -16,6 +16,7 @@ This repository contains various examples on how to use the [security-jwt](https
 | starter-custom-jwtuser          | With this example you can see how to use an custom JwtUser implementation with custom fields. |
 | starter-custom-password-encoder | This example shows how to explicitly use another PasswordEncoder instead of the libraries default CryptPasswordEncoder. |
 | starter-custom-security-conf    | In this example the default security config is overwritten and customized. |
+| starter-files                   | The most simple example with an refresh module. |
 | starter-hibernate               | The most simple example with an refresh module. |
 | starter-multiple                | An example which includes two refresh tokenstore implementations. You have to manually, explicitly select one in this case. |
 | starter-swagger                 | This example shows how to use swagger2 to automatically generate an api documentation. |

@@ -6,7 +6,7 @@
  */
 package eu.fraho.spring.example.starter_custom_security_conf;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +17,9 @@ import javax.servlet.*;
 import java.io.IOException;
 
 @Configuration
-@Slf4j
 public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CustomSecurityConfig.class);
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         log.info("Adding custom filter");

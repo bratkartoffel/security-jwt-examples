@@ -1,8 +1,7 @@
 buildscript {
     ext {
-        lombokVersion = '[1.16,2.0['
-        h2Version = '[1.4,2.0['
-        springfoxVersion = '[2.7,3.0['
+        h2Version = '1.4.197'
+        springfoxVersion = '2.9.2'
     }
     repositories {
         mavenLocal()
@@ -28,7 +27,6 @@ jar {
     version = "${project.version}"
 }
 dependencies {
-    compile("org.projectlombok:lombok:${lombokVersion}")
     compile("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
     compile("com.h2database:h2:${h2Version}")
     compile("io.springfox:springfox-swagger2:${springfoxVersion}")
@@ -36,13 +34,3 @@ dependencies {
 
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
-
-// code coverage
-apply plugin: 'jacoco'
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-check.dependsOn jacocoTestReport

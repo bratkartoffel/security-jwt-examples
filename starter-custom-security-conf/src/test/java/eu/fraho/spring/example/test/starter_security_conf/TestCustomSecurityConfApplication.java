@@ -8,8 +8,6 @@ package eu.fraho.spring.example.test.starter_security_conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_security_conf.CustomSecurityConfApplication;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +25,10 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.Filter;
 import java.util.Map;
 
-@Slf4j
 @SpringBootTest(classes = CustomSecurityConfApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCustomSecurityConfApplication {
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
 
     @Autowired
@@ -117,5 +113,9 @@ public class TestCustomSecurityConfApplication {
                 .getContentAsByteArray();
 
         return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+    }
+
+    public WebApplicationContext getWebApplicationContext() {
+        return this.webApplicationContext;
     }
 }

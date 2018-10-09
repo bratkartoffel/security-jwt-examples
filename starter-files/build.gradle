@@ -1,0 +1,31 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+group = 'eu.fraho.spring'
+description = "Spring boot security integration for JWT example application"
+
+jar {
+    version = "${project.version}"
+}
+dependencies {
+    compile("eu.fraho.spring:security-jwt-files-spring-boot-starter:${securityJwtVersion}")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
