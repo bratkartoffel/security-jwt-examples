@@ -8,8 +8,6 @@ package eu.fraho.spring.example.test.starter_custom_login_service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_login_service.CustomLoginServiceApplication;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,13 +25,11 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.Filter;
 import java.util.Map;
 
-@Slf4j
 @SpringBootTest(classes = CustomLoginServiceApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCustomLoginServiceApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    @Getter
     private WebApplicationContext webApplicationContext;
     @Autowired
     private Filter springSecurityFilterChain;

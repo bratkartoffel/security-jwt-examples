@@ -7,16 +7,12 @@
 package eu.fraho.spring.example.starter_custom_login_service;
 
 import com.nimbusds.jose.JOSEException;
-import eu.fraho.spring.securityJwt.dto.AccessToken;
-import eu.fraho.spring.securityJwt.dto.AuthenticationRequest;
-import eu.fraho.spring.securityJwt.dto.AuthenticationResponse;
-import eu.fraho.spring.securityJwt.dto.JwtUser;
-import eu.fraho.spring.securityJwt.service.JwtTokenService;
-import eu.fraho.spring.securityJwt.service.LoginService;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import eu.fraho.spring.securityJwt.base.dto.AccessToken;
+import eu.fraho.spring.securityJwt.base.dto.AuthenticationRequest;
+import eu.fraho.spring.securityJwt.base.dto.AuthenticationResponse;
+import eu.fraho.spring.securityJwt.base.dto.JwtUser;
+import eu.fraho.spring.securityJwt.base.service.JwtTokenService;
+import eu.fraho.spring.securityJwt.base.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -27,28 +23,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
-@NoArgsConstructor
 public class PasswordIgnoringLoginService implements LoginService {
-    @Setter(onMethod = @__({@Autowired, @NonNull}))
-    private JwtTokenService jwtTokenService;
+    private final JwtTokenService jwtTokenService;
+    private final UserDetailsService userDetailsService;
 
-    @Setter(onMethod = @__({@Autowired, @NonNull}))
-    private UserDetailsService userDetailsService;
+    @Autowired
+    @java.beans.ConstructorProperties({"jwtTokenService", "userDetailsService"})
+    public PasswordIgnoringLoginService(JwtTokenService jwtTokenService, UserDetailsService userDetailsService) {
+        this.jwtTokenService = jwtTokenService;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public AuthenticationResponse checkLogin(AuthenticationRequest authenticationRequest) throws AuthenticationException {
         // Perform the basic security
-        final Authentication authentication = new TestingAuthenticationToken(
+        Authentication authentication = new TestingAuthenticationToken(
                 authenticationRequest.getUsername(),
                 authenticationRequest.getPassword()
         );
 
-        final JwtUser userDetails = (JwtUser) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        JwtUser userDetails = (JwtUser) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        final AccessToken accessToken;
+        AccessToken accessToken;
         try {
             accessToken = jwtTokenService.generateToken(userDetails);
         } catch (JOSEException e) {
