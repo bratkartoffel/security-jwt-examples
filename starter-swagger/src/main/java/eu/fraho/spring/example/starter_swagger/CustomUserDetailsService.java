@@ -1,6 +1,6 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
@@ -19,13 +19,7 @@ import java.util.Collections;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    @java.beans.ConstructorProperties({"passwordEncoder"})
-    public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -39,5 +33,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         return user;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }

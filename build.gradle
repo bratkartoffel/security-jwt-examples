@@ -1,8 +1,0 @@
-subprojects {
-    buildscript {
-        ext {
-            securityJwtVersion = '4.2.0'
-            springBootVersion = '2.2.4.RELEASE'
-        }
-    }
-}

@@ -1,11 +1,12 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
 package eu.fraho.spring.example.test.starter_custom_password_encoder;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_password_encoder.CustomPasswordEncoderApplication;
 import org.junit.Assert;
@@ -30,26 +31,20 @@ import java.util.Map;
 @SpringBootTest(classes = CustomPasswordEncoderApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestCustomPasswordEncoderApplication {
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private WebApplicationContext webApplicationContext;
-
     @Autowired
     private Filter springSecurityFilterChain;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private MockMvc mockMvc;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         if (mockMvc == null) {
-            synchronized (this) {
-                if (mockMvc == null) {
-                    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
-                }
-            }
+            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
         }
     }
 
@@ -100,12 +95,12 @@ public class TestCustomPasswordEncoderApplication {
 
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
     @Test
-    public void testPasswordEncoder() throws Exception {
+    public void testPasswordEncoder() {
         Assert.assertTrue("Custom password encoder not used", passwordEncoder.matches("hello", "hellofoo"));
     }
 
@@ -117,12 +112,13 @@ public class TestCustomPasswordEncoderApplication {
 
         byte[] body = mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsByteArray();
 
-        return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        }).get("accessToken")).get("token");
     }
 
     public WebApplicationContext getWebApplicationContext() {

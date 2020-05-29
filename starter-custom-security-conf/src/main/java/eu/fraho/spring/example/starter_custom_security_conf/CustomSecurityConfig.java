@@ -1,6 +1,6 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
@@ -21,7 +21,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(CustomSecurityConfig.class);
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    protected void configure(HttpSecurity httpSecurity) {
         log.info("Adding custom filter");
         httpSecurity.addFilterBefore(customFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -30,7 +30,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
     public Filter customFilter() {
         return new Filter() {
             @Override
-            public void init(FilterConfig filterConfig) throws ServletException {
+            public void init(FilterConfig filterConfig) {
                 log.info("Initializing");
             }
 

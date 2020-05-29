@@ -22,11 +22,8 @@ repositories {
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
 
-jar {
-    version = "${project.version}"
-}
 dependencies {
-    compile("eu.fraho.spring:security-jwt-base:${securityJwtVersion}")
+    implementation("eu.fraho.spring:security-jwt-base:${securityJwtVersion}")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

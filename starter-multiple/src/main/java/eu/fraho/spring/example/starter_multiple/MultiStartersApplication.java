@@ -1,6 +1,6 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
@@ -23,8 +23,7 @@ public class MultiStartersApplication {
     // we want explicitly use the in memory implementation
     // if not specified this way, the dependency listed latest in build.gradle will be used
     @Bean
-    public RefreshTokenStore refreshTokenStore(final RefreshProperties refreshProperties,
-                                               final UserDetailsService userDetailsService) {
+    public RefreshTokenStore refreshTokenStore(RefreshProperties refreshProperties, UserDetailsService userDetailsService) {
         InternalTokenStore tokenStore = new InternalTokenStore();
         tokenStore.setRefreshProperties(refreshProperties);
         tokenStore.setUserDetailsService(userDetailsService);

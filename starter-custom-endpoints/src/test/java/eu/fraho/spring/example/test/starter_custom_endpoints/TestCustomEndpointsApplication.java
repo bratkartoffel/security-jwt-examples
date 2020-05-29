@@ -1,11 +1,12 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
 package eu.fraho.spring.example.test.starter_custom_endpoints;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_endpoints.CustomEndpointsApplication;
 import org.junit.Before;
@@ -36,13 +37,9 @@ public class TestCustomEndpointsApplication {
     private MockMvc mockMvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         if (mockMvc == null) {
-            synchronized (this) {
-                if (mockMvc == null) {
-                    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
-                }
-            }
+            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
         }
     }
 
@@ -93,7 +90,7 @@ public class TestCustomEndpointsApplication {
 
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
@@ -108,7 +105,7 @@ public class TestCustomEndpointsApplication {
 
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
@@ -120,12 +117,13 @@ public class TestCustomEndpointsApplication {
 
         byte[] body = mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsByteArray();
 
-        return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        }).get("accessToken")).get("token");
     }
 
     private String obtainRefreshToken() throws Exception {
@@ -136,12 +134,13 @@ public class TestCustomEndpointsApplication {
 
         byte[] body = mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsByteArray();
 
-        return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("refreshToken")).get("token"));
+        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        }).get("refreshToken")).get("token");
     }
 
     public WebApplicationContext getWebApplicationContext() {

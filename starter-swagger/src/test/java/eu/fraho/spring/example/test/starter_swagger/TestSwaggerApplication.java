@@ -1,11 +1,12 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
 package eu.fraho.spring.example.test.starter_swagger;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_swagger.SwaggerApplication;
 import org.junit.Before;
@@ -39,13 +40,9 @@ public class TestSwaggerApplication {
     private MockMvc mockMvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         if (mockMvc == null) {
-            synchronized (this) {
-                if (mockMvc == null) {
-                    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
-                }
-            }
+            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
         }
     }
 
@@ -96,17 +93,17 @@ public class TestSwaggerApplication {
 
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
     @Test
     public void testSwaggerDocs() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/v2/api-docs")
-                .accept(MediaType.APPLICATION_JSON_UTF8);
+                .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.info.title").value("Fraho securityJwt example API"));
     }
 
@@ -127,12 +124,13 @@ public class TestSwaggerApplication {
 
         byte[] body = mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsByteArray();
 
-        return String.valueOf(((Map) objectMapper.readValue(body, Map.class).get("accessToken")).get("token"));
+        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        }).get("accessToken")).get("token");
     }
 
     public WebApplicationContext getWebApplicationContext() {

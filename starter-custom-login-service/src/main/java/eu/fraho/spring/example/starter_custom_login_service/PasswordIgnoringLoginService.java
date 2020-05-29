@@ -1,6 +1,6 @@
 /*
  * MIT Licence
- * Copyright (c) 2017 Simon Frankenberger
+ * Copyright (c) 2020 Simon Frankenberger
  *
  * Please see LICENCE.md for complete licence text.
  */
@@ -24,15 +24,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordIgnoringLoginService implements LoginService {
-    private final JwtTokenService jwtTokenService;
-    private final UserDetailsService userDetailsService;
-
-    @Autowired
-    @java.beans.ConstructorProperties({"jwtTokenService", "userDetailsService"})
-    public PasswordIgnoringLoginService(JwtTokenService jwtTokenService, UserDetailsService userDetailsService) {
-        this.jwtTokenService = jwtTokenService;
-        this.userDetailsService = userDetailsService;
-    }
+    private JwtTokenService jwtTokenService;
+    private UserDetailsService userDetailsService;
 
     @Override
     public AuthenticationResponse checkLogin(AuthenticationRequest authenticationRequest) throws AuthenticationException {
@@ -54,5 +47,15 @@ public class PasswordIgnoringLoginService implements LoginService {
         }
 
         return AuthenticationResponse.builder().accessToken(accessToken).build();
+    }
+
+    @Autowired
+    public void setJwtTokenService(JwtTokenService jwtTokenService) {
+        this.jwtTokenService = jwtTokenService;
+    }
+
+    @Autowired
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 }

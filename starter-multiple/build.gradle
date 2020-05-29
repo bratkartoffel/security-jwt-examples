@@ -22,13 +22,11 @@ repositories {
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
 
-jar {
-    version = "${project.version}"
-}
-dependencies {
-    compile("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
-    compile("eu.fraho.spring:security-jwt-hibernate-spring-boot-starter:${securityJwtVersion}")
-    compile("com.h2database:h2:${h2Version}")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+dependencies {
+    implementation("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
+    implementation("eu.fraho.spring:security-jwt-hibernate-spring-boot-starter:${securityJwtVersion}")
+    implementation("com.h2database:h2:${h2Version}")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
