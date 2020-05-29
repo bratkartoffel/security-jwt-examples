@@ -1,0 +1,12 @@
+plugins {
+    id 'com.adarshr.test-logger' version "$testLoggerPluginVersion" apply false
+}
+
+subprojects {
+    apply plugin: 'com.adarshr.test-logger'
+
+    // do not try to print colors on stdout when running on jenkins or travis
+    if (System.getenv("JENKINS_HOME") != null || System.getenv("TRAVIS_BUILD_ID") != null) {
+        testlogger.theme 'plain'
+    }
+}
