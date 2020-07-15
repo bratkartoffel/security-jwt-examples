@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -99,7 +100,7 @@ public class TestSwaggerApplication {
 
     @Test
     public void testSwaggerDocs() throws Exception {
-        MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/v2/api-docs")
+        MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/v3/api-docs")
                 .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -108,8 +109,17 @@ public class TestSwaggerApplication {
     }
 
     @Test
-    public void testSwaggerUi() throws Exception {
+    public void testSwaggerUiRedirect() throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/swagger-ui.html")
+                .accept(MediaType.TEXT_HTML);
+        mockMvc.perform(req)
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.LOCATION, "/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"));
+    }
+
+    @Test
+    public void testSwaggerUiDirect() throws Exception {
+        MockHttpServletRequestBuilder req = MockMvcRequestBuilders.get("/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config")
                 .accept(MediaType.TEXT_HTML);
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
