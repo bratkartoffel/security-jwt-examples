@@ -1,7 +1,7 @@
 buildscript {
     ext {
         h2Version = '1.4.200'
-        springfoxVersion = '2.9.2'
+        openApiVersion = '1.4.3'
     }
     repositories {
         mavenLocal()
@@ -25,8 +25,7 @@ description = "Spring boot security integration for JWT example application"
 dependencies {
     implementation("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
     implementation("com.h2database:h2:${h2Version}")
-    implementation("io.springfox:springfox-swagger2:${springfoxVersion}")
-    implementation("io.springfox:springfox-swagger-ui:${springfoxVersion}")
+    implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
