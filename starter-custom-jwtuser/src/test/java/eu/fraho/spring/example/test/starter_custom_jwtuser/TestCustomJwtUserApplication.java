@@ -12,14 +12,14 @@ import eu.fraho.spring.example.starter_custom_jwtuser.CustomJwtUserApplication;
 import eu.fraho.spring.example.starter_custom_jwtuser.MyJwtUser;
 import eu.fraho.spring.securityJwt.base.dto.JwtUser;
 import eu.fraho.spring.securityJwt.base.service.JwtTokenService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest(classes = CustomJwtUserApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TestCustomJwtUserApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
@@ -43,7 +43,7 @@ public class TestCustomJwtUserApplication {
     private JwtTokenService jwtTokenService;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         if (mockMvc == null) {
             mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
@@ -106,8 +106,8 @@ public class TestCustomJwtUserApplication {
         String token = obtainToken();
 
         Optional<JwtUser> jwtUser = jwtTokenService.parseUser(token);
-        Assert.assertTrue("JwtUser should be parsed", jwtUser.isPresent());
-        Assert.assertEquals("JwtUser hsould be custom instance", MyJwtUser.class, jwtUser.get().getClass());
+        Assertions.assertTrue(jwtUser.isPresent(), "JwtUser should be parsed");
+        Assertions.assertEquals(MyJwtUser.class, jwtUser.get().getClass(), "JwtUser hsould be custom instance");
     }
 
     @Test
@@ -117,12 +117,12 @@ public class TestCustomJwtUserApplication {
         Optional<JwtUser> jwtUser1 = jwtTokenService.parseUser(token);
         Optional<JwtUser> jwtUser2 = jwtTokenService.parseUser(token);
 
-        Assert.assertTrue("JwtUser1 should be parsed", jwtUser1.isPresent());
-        Assert.assertTrue("JwtUser2 should be parsed", jwtUser2.isPresent());
+        Assertions.assertTrue(jwtUser1.isPresent(), "JwtUser1 should be parsed");
+        Assertions.assertTrue(jwtUser2.isPresent(), "JwtUser2 should be parsed");
 
-        Assert.assertEquals("JwtUser should be custom class", MyJwtUser.class, jwtUser1.get().getClass());
-        Assert.assertEquals("JwtUser should should have custom proprty set", "this is an example", ((MyJwtUser) jwtUser1.get()).getFoobar());
-        Assert.assertNotSame("JwtUsers should be not the same instance", jwtUser1.get(), jwtUser2.get());
+        Assertions.assertEquals(MyJwtUser.class, jwtUser1.get().getClass(), "JwtUser should be custom class");
+        Assertions.assertEquals("JwtUser should should have custom proprty set", "this is an example", ((MyJwtUser) jwtUser1.get()).getFoobar());
+        Assertions.assertNotSame(jwtUser1.get(), jwtUser2.get(), "JwtUsers should be not the same instance");
     }
 
     private String obtainToken() throws Exception {
@@ -140,9 +140,5 @@ public class TestCustomJwtUserApplication {
 
         return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         }).get("accessToken")).get("token");
-    }
-
-    public WebApplicationContext getWebApplicationContext() {
-        return this.webApplicationContext;
     }
 }

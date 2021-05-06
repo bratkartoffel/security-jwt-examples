@@ -9,15 +9,15 @@ package eu.fraho.spring.example.test.starter_custom_password_encoder;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_password_encoder.CustomPasswordEncoderApplication;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +29,7 @@ import javax.servlet.Filter;
 import java.util.Map;
 
 @SpringBootTest(classes = CustomPasswordEncoderApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TestCustomPasswordEncoderApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
@@ -41,7 +41,7 @@ public class TestCustomPasswordEncoderApplication {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         if (mockMvc == null) {
             mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
@@ -101,7 +101,7 @@ public class TestCustomPasswordEncoderApplication {
 
     @Test
     public void testPasswordEncoder() {
-        Assert.assertTrue("Custom password encoder not used", passwordEncoder.matches("hello", "hellofoo"));
+        Assertions.assertTrue(passwordEncoder.matches("hello", "hellofoo"), "Custom password encoder not used");
     }
 
     private String obtainToken() throws Exception {
@@ -119,9 +119,5 @@ public class TestCustomPasswordEncoderApplication {
 
         return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         }).get("accessToken")).get("token");
-    }
-
-    public WebApplicationContext getWebApplicationContext() {
-        return this.webApplicationContext;
     }
 }

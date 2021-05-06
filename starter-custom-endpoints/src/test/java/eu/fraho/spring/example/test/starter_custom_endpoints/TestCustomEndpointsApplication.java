@@ -9,13 +9,13 @@ package eu.fraho.spring.example.test.starter_custom_endpoints;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_endpoints.CustomEndpointsApplication;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,7 +27,7 @@ import javax.servlet.Filter;
 import java.util.Map;
 
 @SpringBootTest(classes = CustomEndpointsApplication.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TestCustomEndpointsApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
@@ -36,7 +36,7 @@ public class TestCustomEndpointsApplication {
     private Filter springSecurityFilterChain;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         if (mockMvc == null) {
             mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
@@ -141,9 +141,5 @@ public class TestCustomEndpointsApplication {
 
         return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         }).get("refreshToken")).get("token");
-    }
-
-    public WebApplicationContext getWebApplicationContext() {
-        return this.webApplicationContext;
     }
 }
