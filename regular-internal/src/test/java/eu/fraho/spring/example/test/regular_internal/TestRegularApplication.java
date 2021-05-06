@@ -110,8 +110,4 @@ public class TestRegularApplication {
         return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         }).get("accessToken")).get("token");
     }
-
-    public WebApplicationContext getWebApplicationContext() {
-        return this.webApplicationContext;
-    }
 }

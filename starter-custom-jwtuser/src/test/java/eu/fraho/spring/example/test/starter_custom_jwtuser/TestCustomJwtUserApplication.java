@@ -121,7 +121,7 @@ public class TestCustomJwtUserApplication {
         Assertions.assertTrue(jwtUser2.isPresent(), "JwtUser2 should be parsed");
 
         Assertions.assertEquals(MyJwtUser.class, jwtUser1.get().getClass(), "JwtUser should be custom class");
-        Assertions.assertEquals("JwtUser should should have custom proprty set", "this is an example", ((MyJwtUser) jwtUser1.get()).getFoobar());
+        Assertions.assertEquals("this is an example", ((MyJwtUser) jwtUser1.get()).getFoobar(), "JwtUser should should have custom proprty set");
         Assertions.assertNotSame(jwtUser1.get(), jwtUser2.get(), "JwtUsers should be not the same instance");
     }
 

@@ -25,5 +25,5 @@ dependencies {
     implementation("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
     implementation("com.h2database:h2:${h2Version}")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

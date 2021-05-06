@@ -1,12 +1,19 @@
 plugins {
     id 'com.adarshr.test-logger' version "$testLoggerPluginVersion" apply false
+    id 'org.springframework.boot' version "$springBootVersion" apply false
 }
 
 subprojects {
+    apply plugin: 'java'
     apply plugin: 'com.adarshr.test-logger'
+    apply plugin: 'io.spring.dependency-management'
 
     // do not try to print colors on stdout when running on jenkins
     if (System.getenv("JENKINS_HOME") != null) {
         testlogger.theme 'plain'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
