@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
@@ -31,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setApiAccessAllowed(true);
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
-        user.setFoobar("this is an example");
+        user.setUuid(UUID.fromString("550e8400-e29b-11d4-a716-446655440000")); // any uuid
         return user;
     }
 

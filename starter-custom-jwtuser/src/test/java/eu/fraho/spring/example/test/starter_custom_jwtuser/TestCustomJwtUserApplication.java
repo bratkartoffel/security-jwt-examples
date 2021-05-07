@@ -30,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.Filter;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootTest(classes = CustomJwtUserApplication.class)
 @ExtendWith(SpringExtension.class)
@@ -121,7 +122,7 @@ public class TestCustomJwtUserApplication {
         Assertions.assertTrue(jwtUser2.isPresent(), "JwtUser2 should be parsed");
 
         Assertions.assertEquals(MyJwtUser.class, jwtUser1.get().getClass(), "JwtUser should be custom class");
-        Assertions.assertEquals("this is an example", ((MyJwtUser) jwtUser1.get()).getFoobar(), "JwtUser should should have custom proprty set");
+        Assertions.assertEquals(UUID.fromString("550e8400-e29b-11d4-a716-446655440000"), ((MyJwtUser) jwtUser1.get()).getUuid(), "JwtUser should should have custom proprty set");
         Assertions.assertNotSame(jwtUser1.get(), jwtUser2.get(), "JwtUsers should be not the same instance");
     }
 
