@@ -122,8 +122,10 @@ public class TestCustomEndpointsApplication {
                 .getResponse()
                 .getContentAsByteArray();
 
-        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
-        }).get("accessToken")).get("token");
+        Object obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        });
+        Map<String, Map<String, String>> result = (Map<String, Map<String, String>>) obj;
+        return result.get("accessToken").get("token");
     }
 
     private String obtainRefreshToken() throws Exception {
@@ -139,7 +141,9 @@ public class TestCustomEndpointsApplication {
                 .getResponse()
                 .getContentAsByteArray();
 
-        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
-        }).get("refreshToken")).get("token");
+        Object obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        });
+        Map<String, Map<String, String>> result = (Map<String, Map<String, String>>) obj;
+        return result.get("refreshToken").get("token");
     }
 }

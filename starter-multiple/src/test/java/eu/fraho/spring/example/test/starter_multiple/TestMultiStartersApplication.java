@@ -107,7 +107,9 @@ public class TestMultiStartersApplication {
                 .getResponse()
                 .getContentAsByteArray();
 
-        return (objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
-        }).get("accessToken")).get("token");
+        Object obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        });
+        Map<String, Map<String, String>> result = (Map<String, Map<String, String>>) obj;
+        return result.get("accessToken").get("token");
     }
 }
