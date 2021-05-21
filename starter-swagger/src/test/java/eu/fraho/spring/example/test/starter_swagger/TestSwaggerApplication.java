@@ -94,7 +94,7 @@ public class TestSwaggerApplication {
 
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
@@ -104,7 +104,7 @@ public class TestSwaggerApplication {
                 .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.info.title").value("Fraho securityJwt example API"));
     }
 
@@ -134,7 +134,7 @@ public class TestSwaggerApplication {
 
         byte[] body = mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsByteArray();
