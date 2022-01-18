@@ -9,6 +9,7 @@ package eu.fraho.spring.example.test.starter_swagger;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_swagger.SwaggerApplication;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -114,7 +115,7 @@ public class TestSwaggerApplication {
                 .accept(MediaType.TEXT_HTML);
         mockMvc.perform(req)
                 .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.LOCATION, "/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"));
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.LOCATION, Matchers.startsWith("/swagger-ui/index.html")));
     }
 
     @Test

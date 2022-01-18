@@ -1,7 +1,7 @@
 buildscript {
     ext {
         h2Version = '1.4.200'
-        openApiVersion = '1.5.12'
+        openApiVersion = '1.1.49'
     }
     repositories {
         mavenLocal()
@@ -23,9 +23,20 @@ repositories {
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
 dependencies {
-    implementation("eu.fraho.spring:security-jwt-internal-spring-boot-starter:${securityJwtVersion}")
-    implementation("com.h2database:h2:${h2Version}")
-    implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
-
-    implementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    implementation(
+            [group: 'eu.fraho.spring', name: 'security-jwt-internal-spring-boot-starter', version: securityJwtVersion],
+            [group: 'com.h2database', name: 'h2', version: h2Version],
+            [group: 'org.springdoc', name: 'springdoc-openapi-ui', version: openApiVersion],
+    )
+    testImplementation(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion]
+    )
+    // as the security-jwt library uses springdoc-openapi in a specific version we have to make sure
+    // that all deps use the same minor version.
+    // make sure that we still run with openapi 1.1
+    constraints {
+        implementation('org.springdoc:springdoc-openapi-ui') { version { strictly openApiVersion } }
+        implementation('org.springdoc:springdoc-openapi-common') { version { strictly openApiVersion } }
+        implementation('org.springdoc:springdoc-openapi-webmvc-core') { version { strictly openApiVersion } }
+    }
 }
