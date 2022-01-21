@@ -9,39 +9,24 @@ package eu.fraho.spring.example.test.starter_multiple;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_multiple.MultiStartersApplication;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.Filter;
 import java.util.Map;
 
 @SpringBootTest(classes = MultiStartersApplication.class)
-@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
 public class TestMultiStartersApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    private Filter springSecurityFilterChain;
     private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setUp() {
-        if (mockMvc == null) {
-            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
-        }
-    }
 
     @Test
     public void testPrivateNoToken() throws Exception {
@@ -107,9 +92,8 @@ public class TestMultiStartersApplication {
                 .getResponse()
                 .getContentAsByteArray();
 
-        Object obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        Map<String, Map<String, String>> obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         });
-        Map<String, Map<String, String>> result = (Map<String, Map<String, String>>) obj;
-        return result.get("accessToken").get("token");
+        return obj.get("accessToken").get("token");
     }
 }

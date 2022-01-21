@@ -10,43 +10,27 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_password_encoder.CustomPasswordEncoderApplication;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.Filter;
 import java.util.Map;
 
 @SpringBootTest(classes = CustomPasswordEncoderApplication.class)
-@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
 public class TestCustomPasswordEncoderApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    private Filter springSecurityFilterChain;
     private MockMvc mockMvc;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @BeforeEach
-    public void setUp() {
-        if (mockMvc == null) {
-            mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain).build();
-        }
-    }
 
     @Test
     public void testPrivateNoToken() throws Exception {
@@ -117,9 +101,8 @@ public class TestCustomPasswordEncoderApplication {
                 .getResponse()
                 .getContentAsByteArray();
 
-        Object obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
+        Map<String, Map<String, String>> obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
         });
-        Map<String, Map<String, String>> result = (Map<String, Map<String, String>>) obj;
-        return result.get("accessToken").get("token");
+        return obj.get("accessToken").get("token");
     }
 }
