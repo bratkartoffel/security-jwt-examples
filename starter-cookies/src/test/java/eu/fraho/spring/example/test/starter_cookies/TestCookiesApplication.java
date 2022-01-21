@@ -12,10 +12,12 @@ import eu.fraho.spring.example.starter_cookies.CookiesApplication;
 import eu.fraho.spring.securityJwt.base.config.RefreshProperties;
 import eu.fraho.spring.securityJwt.base.config.TokenProperties;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,6 +29,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @SpringBootTest(classes = CookiesApplication.class)
+@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 public class TestCookiesApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();

@@ -10,10 +10,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_custom_login_service.CustomLoginServiceApplication;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Map;
 
 @SpringBootTest(classes = CustomLoginServiceApplication.class)
+@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 public class TestCustomLoginServiceApplication {
     private final ObjectMapper objectMapper = new ObjectMapper();
