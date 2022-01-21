@@ -1,17 +1,18 @@
+import org.gradle.util.internal.VersionNumber
+
 buildscript {
-    ext {
-        h2Version = '1.4.200'
-    }
     repositories {
-        mavenLocal()
         mavenCentral()
+        // also support snapshot / milestone releases of spring
+        maven { url 'https://repo.spring.io/milestone/' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
     }
 }
 
-if (springBootVersion.startsWith("2.6")) {
+// when running spring boot 2.6+, openapi >= 1.5 is required
+if (VersionNumber.parse(springBootVersion).compareTo(new VersionNumber(2, 6, 0, null)) >= 0) {
     ext.openApiVersion = '1.5.13'
 } else {
     ext.openApiVersion = '1.1.49'
@@ -21,8 +22,12 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
 repositories {
+    // for local development
     mavenLocal()
+    // take everything from central
     mavenCentral()
+    // also support snapshot / milestone releases of spring
+    maven { url 'https://repo.spring.io/milestone/' }
 }
 
 group = 'eu.fraho.spring'
@@ -30,15 +35,14 @@ description = "Spring boot security integration for JWT example application"
 dependencies {
     implementation(
             [group: 'eu.fraho.spring', name: 'security-jwt-internal-spring-boot-starter', version: securityJwtVersion],
-            [group: 'com.h2database', name: 'h2', version: h2Version],
             [group: 'org.springdoc', name: 'springdoc-openapi-ui', version: openApiVersion],
     )
     testImplementation(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion]
     )
     // as the security-jwt library uses springdoc-openapi in a specific version we have to make sure
-    // that all deps use the same minor version.
-    // make sure that we still run with openapi 1.1
+    // * that all deps are the same version.
+    // * that we still run with openapi 1.1
     constraints {
         implementation('org.springdoc:springdoc-openapi-ui') { version { strictly openApiVersion } }
         implementation('org.springdoc:springdoc-openapi-common') { version { strictly openApiVersion } }

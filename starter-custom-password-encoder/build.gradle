@@ -1,13 +1,11 @@
 buildscript {
-    ext {
-        h2Version = '1.4.200'
-    }
     repositories {
-        mavenLocal()
         mavenCentral()
+        // also support snapshot / milestone releases of spring
+        maven { url 'https://repo.spring.io/milestone/' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
     }
 }
 
@@ -15,16 +13,17 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
 repositories {
+    // for local development
     mavenLocal()
+    // take everything from central
     mavenCentral()
+    // also support snapshot / milestone releases of spring
+    maven { url 'https://repo.spring.io/milestone/' }
 }
 
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
 dependencies {
-    implementation("eu.fraho.spring:security-jwt-hibernate-spring-boot-starter:${securityJwtVersion}")
-    implementation("com.h2database:h2:${h2Version}")
-
-    implementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
-    testImplementation("org.bouncycastle:bcprov-jdk15on:1.58")
+    implementation([group: 'eu.fraho.spring', name: 'security-jwt-internal-spring-boot-starter', version: securityJwtVersion])
+    testImplementation([group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion])
 }
