@@ -8,7 +8,11 @@ pluginManagement {
 
 include ":regular-internal"
 include ":regular-no-refresh"
-include ":starter-cookies"
+if (springBootVersion.startsWith("3.")) {
+    include ":starter-cookies-jakarta"
+} else {
+    include ":starter-cookies-javax"
+}
 include ":starter-custom-endpoints"
 include ":starter-custom-jwtuser"
 include ":starter-custom-login-service"
