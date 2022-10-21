@@ -12,12 +12,12 @@ if (springBootVersion.startsWith("3.")) {
     include ":starter-cookies-jakarta"
 } else {
     include ":starter-cookies-javax"
+    include ":starter-custom-security-conf"
 }
 include ":starter-custom-endpoints"
 include ":starter-custom-jwtuser"
 include ":starter-custom-login-service"
 include ":starter-custom-password-encoder"
-include ":starter-custom-security-conf"
 include ":starter-files"
 include ":starter-hibernate"
 include ":starter-multiple"
