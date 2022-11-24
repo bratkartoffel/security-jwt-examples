@@ -13,7 +13,7 @@ buildscript {
 
 // when running spring boot 2.6+, openapi >= 1.5 is required
 if (VersionNumber.parse(springBootVersion).compareTo(new VersionNumber(2, 6, 0, null)) >= 0) {
-    ext.openApiVersion = '1.5.13'
+    ext.openApiVersion = '1.6.13'
 } else {
     ext.openApiVersion = '1.1.49'
 }
