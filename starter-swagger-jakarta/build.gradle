@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        // also support snapshot / milestone releases of spring
+        maven { url 'https://repo.spring.io/milestone/' }
+    }
+    dependencies {
+        classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    // for local development
+    mavenLocal()
+    // take everything from central
+    mavenCentral()
+    // also support snapshot / milestone releases of spring
+    maven { url 'https://repo.spring.io/milestone/' }
+}
+
+group = 'eu.fraho.spring'
+description = "Spring boot security integration for JWT example application"
+dependencies {
+    implementation(
+            [group: 'eu.fraho.spring', name: 'security-jwt-internal-spring-boot-starter', version: securityJwtVersion],
+            [group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.0'],
+    )
+    testImplementation(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion]
+    )
+}

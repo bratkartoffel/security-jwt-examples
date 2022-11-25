@@ -12,12 +12,11 @@ if (springBootVersion.startsWith("3.")) {
     include ":starter-cookies-jakarta"
     // custom security configuration adapter no longer supported with spring boot 3.x
     //include ":starter-custom-security-conf"
-    // springfox swagger not yet compatible with spring boot 3.x
-    //include ":starter-swagger"
+    include ":starter-swagger-jakarta"
 } else {
     include ":starter-cookies-javax"
     include ":starter-custom-security-conf"
-    include ":starter-swagger"
+    include ":starter-swagger-javax"
 }
 include ":starter-custom-endpoints"
 include ":starter-custom-jwtuser"
