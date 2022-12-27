@@ -1,16 +1,5 @@
 import org.gradle.util.internal.VersionNumber
 
-buildscript {
-    repositories {
-        mavenCentral()
-        // also support snapshot / milestone releases of spring
-        maven { url 'https://repo.spring.io/milestone/' }
-    }
-    dependencies {
-        classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
-    }
-}
-
 // when running spring boot 2.6+, openapi >= 1.5 is required
 if (VersionNumber.parse(springBootVersion).compareTo(new VersionNumber(2, 6, 0, null)) >= 0) {
     ext.openApiVersion = '1.6.13'
@@ -20,15 +9,6 @@ if (VersionNumber.parse(springBootVersion).compareTo(new VersionNumber(2, 6, 0, 
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-
-repositories {
-    // for local development
-    mavenLocal()
-    // take everything from central
-    mavenCentral()
-    // also support snapshot / milestone releases of spring
-    maven { url 'https://repo.spring.io/milestone/' }
-}
 
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"

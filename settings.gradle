@@ -1,11 +1,3 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        // also support snapshot / milestone releases of spring
-        maven { url 'https://repo.spring.io/milestone/' }
-    }
-}
-
 include ":regular-internal"
 include ":regular-no-refresh"
 if (springBootVersion.startsWith("3.")) {

@@ -2,11 +2,6 @@ buildscript {
     ext {
         h2Version = '1.4.200'
     }
-    repositories {
-        mavenCentral()
-        // also support snapshot / milestone releases of spring
-        maven { url 'https://repo.spring.io/milestone/' }
-    }
     dependencies {
         classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
     }
@@ -14,15 +9,6 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-
-repositories {
-    // for local development
-    mavenLocal()
-    // take everything from central
-    mavenCentral()
-    // also support snapshot / milestone releases of spring
-    maven { url 'https://repo.spring.io/milestone/' }
-}
 
 group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
