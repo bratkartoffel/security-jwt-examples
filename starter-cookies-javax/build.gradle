@@ -1,12 +1,3 @@
-buildscript {
-    ext {
-        h2Version = '1.4.200'
-    }
-    dependencies {
-        classpath([group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion])
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
