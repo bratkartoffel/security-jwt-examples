@@ -82,10 +82,23 @@ public class TestRegularApplication {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").exists());
     }
 
+    @Test
+    public void testPrivateWithTokenA() throws Exception {
+        String token = obtainToken("userA");
+        MockHttpServletRequestBuilder reqA = MockMvcRequestBuilders.post("/user/a").header("Authorization", token);
+        mockMvc.perform(reqA).andExpect(MockMvcResultMatchers.status().isOk());
+        MockHttpServletRequestBuilder reqB = MockMvcRequestBuilders.post("/user/b").header("Authorization", token);
+        mockMvc.perform(reqB).andExpect(MockMvcResultMatchers.status().isForbidden());
+    }
+
     private String obtainToken() throws Exception {
+        return obtainToken("foo");
+    }
+
+    private String obtainToken(String username) throws Exception {
         MockHttpServletRequestBuilder req = MockMvcRequestBuilders.post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(String.format("{\"username\":\"%s\",\"password\":\"%s\"}", "foo", "foo"))
+                .content(String.format("{\"username\":\"%s\",\"password\":\"%s\"}", username, username))
                 .accept(MediaType.APPLICATION_JSON);
 
         byte[] body = mockMvc.perform(req)
