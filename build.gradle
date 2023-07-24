@@ -1,5 +1,5 @@
 plugins {
-    id 'com.adarshr.test-logger' version "$testLoggerPluginVersion" apply false
+    id 'com.adarshr.test-logger' version "3.2.0" apply false
     id 'org.springframework.boot' version "$springBootVersion" apply false
 }
 
@@ -18,7 +18,7 @@ subprojects {
     }
 
     dependencies {
-        testImplementation([group: 'org.junit.jupiter', name: 'junit-jupiter', version: jupiterVersion])
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.3'
     }
 
     test {
