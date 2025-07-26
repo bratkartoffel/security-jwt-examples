@@ -24,8 +24,15 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
     configurations.configureEach {
         exclude group: 'junit', module: 'junit'
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-parameters'
+        options.compilerArgs << '-Xlint:deprecation'
     }
 }
