@@ -6,11 +6,11 @@
  */
 package eu.fraho.spring.example.test.starter_cookies;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.starter_cookies.CookiesApplication;
 import eu.fraho.spring.securityJwt.base.config.RefreshProperties;
 import eu.fraho.spring.securityJwt.base.config.TokenProperties;
+import eu.fraho.spring.securityJwt.base.dto.AuthenticationRequest;
+import eu.fraho.spring.securityJwt.base.service.LoginService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,13 +32,14 @@ import java.util.stream.Collectors;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 public class TestCookiesApplication {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private TokenProperties tokenConfiguration;
     @Autowired
     private RefreshProperties refreshConfiguration;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private LoginService loginService;
 
     @Test
     public void testPrivateNoToken() throws Exception {
@@ -148,20 +149,14 @@ public class TestCookiesApplication {
                 .andExpect(MockMvcResultMatchers.cookie().exists(refreshConfiguration.getCookie().getNames()[0]));
     }
 
-    private String obtainToken() throws Exception {
-        MockHttpServletRequestBuilder req = MockMvcRequestBuilders.post("/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(String.format("{\"username\":\"%s\",\"password\":\"%s\"}", "foo", "foo"))
-                .accept(MediaType.APPLICATION_JSON);
+    private String obtainToken() {
+        return obtainToken("foo");
+    }
 
-        byte[] body = mockMvc.perform(req)
-                .andReturn()
-                .getResponse()
-                .getContentAsByteArray();
-
-        Map<String, Map<String, String>> obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
-        });
-        return obj.get("accessToken").get("token");
+    private String obtainToken(String username) {
+        return loginService.checkLogin(AuthenticationRequest.builder()
+                        .username(username).password(username).build())
+                .getAccessToken().getToken();
     }
 
     /**

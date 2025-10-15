@@ -6,9 +6,9 @@
  */
 package eu.fraho.spring.example.test.regular_no_refresh;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fraho.spring.example.regular_no_refresh.RegularNoRefreshApplication;
+import eu.fraho.spring.securityJwt.base.dto.AuthenticationRequest;
+import eu.fraho.spring.securityJwt.base.service.LoginService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +21,14 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Map;
-
 @SpringBootTest(classes = RegularNoRefreshApplication.class)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 public class TestRegularNoRefreshApplication {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private LoginService loginService;
 
     @Test
     public void testPrivateNoToken() throws Exception {
@@ -82,21 +81,13 @@ public class TestRegularNoRefreshApplication {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken.token").doesNotExist());
     }
 
-    private String obtainToken() throws Exception {
-        MockHttpServletRequestBuilder req = MockMvcRequestBuilders.post("/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(String.format("{\"username\":\"%s\",\"password\":\"%s\"}", "foo", "foo"))
-                .accept(MediaType.APPLICATION_JSON);
+    private String obtainToken() {
+        return obtainToken("foo");
+    }
 
-        byte[] body = mockMvc.perform(req)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse()
-                .getContentAsByteArray();
-
-        Map<String, Map<String, String>> obj = objectMapper.readValue(body, new TypeReference<Map<String, Map<String, String>>>() {
-        });
-        return obj.get("accessToken").get("token");
+    private String obtainToken(String username) {
+        return loginService.checkLogin(AuthenticationRequest.builder()
+                        .username(username).password(username).build())
+                .getAccessToken().getToken();
     }
 }
