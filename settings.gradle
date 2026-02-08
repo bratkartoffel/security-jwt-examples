@@ -2,7 +2,7 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         // also support snapshot / milestone releases of spring
-        maven { url 'https://repo.spring.io/milestone/' }
+        maven { url = 'https://repo.spring.io/milestone/' }
     }
 }
 

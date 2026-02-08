@@ -14,7 +14,7 @@ subprojects {
         // take everything from central
         mavenCentral()
         // also support snapshot / milestone releases of spring
-        maven { url 'https://repo.spring.io/milestone/' }
+        maven { url = 'https://repo.spring.io/milestone/' }
     }
 
     dependencies {
@@ -25,11 +25,6 @@ subprojects {
 
     test {
         useJUnitPlatform()
-    }
-
-    configurations.configureEach {
-        exclude group: 'junit', module: 'junit'
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
     tasks.withType(JavaCompile).configureEach {

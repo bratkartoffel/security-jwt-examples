@@ -5,6 +5,6 @@ group = 'eu.fraho.spring'
 description = "Spring boot security integration for JWT example application"
 
 dependencies {
-    implementation group: 'eu.fraho.spring', name: 'security-jwt-internal-spring-boot-starter', version: securityJwtVersion
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    implementation "eu.fraho.spring:security-jwt-internal-spring-boot-starter:$securityJwtVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 }
