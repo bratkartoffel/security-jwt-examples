@@ -8,16 +8,8 @@ pluginManagement {
 
 include ":regular-internal"
 include ":regular-no-refresh"
-if (springBootVersion.startsWith("2.7")) {
-    include ":starter-cookies-javax"
-    include ":starter-custom-security-conf"
-    include ":starter-swagger-javax"
-} else {
-    include ":starter-cookies-jakarta"
-    // custom security configuration adapter no longer supported with spring boot 3.x
-    //include ":starter-custom-security-conf"
-    include ":starter-swagger-jakarta"
-}
+include ":starter-cookies-jakarta"
+include ":starter-swagger-jakarta"
 include ":starter-custom-endpoints"
 include ":starter-custom-jwtuser"
 include ":starter-custom-login-service"
