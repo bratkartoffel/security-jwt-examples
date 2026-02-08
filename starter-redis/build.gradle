@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+group = 'eu.fraho.spring'
+description = "Spring boot security integration for JWT example application"
+
+dependencies {
+    implementation "eu.fraho.spring:security-jwt-data-redis-spring-boot-starter:$securityJwtVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation "org.testcontainers:testcontainers-junit-jupiter:2.0.3"
+    testImplementation "com.redis:testcontainers-redis:2.2.4"
+}
