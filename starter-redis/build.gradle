@@ -10,3 +10,8 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers-junit-jupiter:2.0.3"
     testImplementation "com.redis:testcontainers-redis:2.2.4"
 }
+
+if (springBootVersion.startsWith("3.0")) {
+    // Boot 3 provides jackson 2.14, but testcontainers-redis requires a jackson feature flag available since 2.15
+    ext['jackson-bom.version'] = '2.15.4'
+}
