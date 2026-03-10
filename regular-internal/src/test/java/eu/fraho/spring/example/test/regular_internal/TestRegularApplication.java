@@ -8,13 +8,12 @@ package eu.fraho.spring.example.test.regular_internal;
 
 import eu.fraho.spring.example.regular_internal.RegularInternalApplication;
 import eu.fraho.spring.securityJwt.base.dto.AuthenticationRequest;
-import eu.fraho.spring.securityJwt.base.dto.AuthenticationResponse;
 import eu.fraho.spring.securityJwt.base.service.LoginService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;

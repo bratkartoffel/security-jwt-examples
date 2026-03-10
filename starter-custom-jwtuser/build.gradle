@@ -6,5 +6,5 @@ description = "Spring boot security integration for JWT example application"
 
 dependencies {
     implementation "eu.fraho.spring:security-jwt-internal-spring-boot-starter:$securityJwtVersion"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test:$springBootVersion"
 }

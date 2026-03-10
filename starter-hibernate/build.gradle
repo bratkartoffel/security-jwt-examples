@@ -7,5 +7,5 @@ description = "Spring boot security integration for JWT example application"
 dependencies {
     implementation "eu.fraho.spring:security-jwt-hibernate-spring-boot-starter:$securityJwtVersion"
     implementation "com.h2database:h2:2.4.240"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test:$springBootVersion"
 }
