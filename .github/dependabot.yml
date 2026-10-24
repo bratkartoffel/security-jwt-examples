@@ -7,3 +7,5 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: com.h2database:h2
+      - dependency-name: gradle-wrapper
+
