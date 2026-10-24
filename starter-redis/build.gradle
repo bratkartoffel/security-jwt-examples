@@ -8,7 +8,7 @@ dependencies {
     implementation "eu.fraho.spring:security-jwt-data-redis-spring-boot-starter:$securityJwtVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testImplementation "org.testcontainers:testcontainers-junit-jupiter:2.0.5"
-    testImplementation "com.redis:testcontainers-redis:2.2.4"
+    testImplementation "com.redis:testcontainers-redis:3.0.0"
 }
 
 if (springBootVersion.startsWith("3.0")) {
